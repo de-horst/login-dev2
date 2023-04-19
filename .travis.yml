@@ -38,3 +38,14 @@ jobs:
         - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
         - docker push dehorst/login-imagem:tagname
       if: branch = main
+
+notifications:
+  webhooks: https://fathomless-fjord-12345.herokuapp.com/notify
+  on_failure: always
+  on_success: always
+  on_start: always
+
+  telegram:
+    secure: "$TELEGRAM_BOT_KEY"
+    chat_id: "$TELEGRAM_CHAT_ID"
+    template: "$(cat telegram.sh)"
