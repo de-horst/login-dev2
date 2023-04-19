@@ -23,3 +23,18 @@ jobs:
         - sudo apt-get install -y apt-utils
         - sudo dpkg --configure -a
         - docker build --no-cache -t login-image:latest .
+       
+      - stage: test
+      name: "Static Application Security Testing (SAST)"
+      script:
+        - echo "Run SAST here"
+        - npm install htmlhint --save-dev
+        - htmlhint index.html
+
+
+    - stage: deploy
+      name: "Deploy to Production"
+      script:
+        - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+        - docker push dehorst/login-imagem:tagname
+      if: branch = main
